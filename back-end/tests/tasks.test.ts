@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 import { prisma } from "../src/database";
 import recommendationFactory from "./factories/recommendationFactory";
 
-describe("/recommendation POST", () => {
+describe("/recommendations POST", () => {
   beforeEach(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
   });
@@ -35,7 +35,7 @@ describe("/recommendation POST", () => {
   });
 });
 
-describe("/recommendation/id/upvote POST", () => {
+describe("/recommendations/id/upvote POST", () => {
   beforeEach(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
   });
@@ -59,7 +59,7 @@ describe("/recommendation/id/upvote POST", () => {
   });
 });
 
-describe("/recommendation/id/downvote POST", () => {
+describe("/recommendations/id/downvote POST", () => {
   beforeEach(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
   });
@@ -98,6 +98,90 @@ describe("/recommendation/id/downvote POST", () => {
     const status = result.status;
 
     expect(status).toEqual(404);
+  });
+
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+});
+
+describe("/recommendations GET", () => {
+  beforeEach(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE recommendations;`;
+  });
+
+  it("get all recommendations", async () => {
+    const result = await supertest(app).get("/recommendations");
+    const status = result.status;
+
+    expect(status).toEqual(200);
+    expect(result.body.length).toEqual(0);
+  });
+
+  it("get recommendation by id", async () => {
+    const body = {
+      name: faker.music.songName(),
+      youtubeLink: "https://www.youtube.com/watch?v=chwyjJbcs1Y",
+    };
+
+    const { id } = await recommendationFactory(body.name, body.youtubeLink);
+
+    const result = await supertest(app).get(`/recommendations/${id}`);
+    const status = result.status;
+
+    expect(status).toEqual(200);
+  });
+
+  it("get recommendation by id, but id don't exist", async () => {
+    const id = 9999999999;
+
+    const result = await supertest(app).get(`/recommendations/${id}`);
+    const status = result.status;
+
+    expect(status).toEqual(404);
+  });
+
+  it("get recommendation random", async () => {
+    const body = {
+      name: faker.music.songName(),
+      youtubeLink: "https://www.youtube.com/watch?v=chwyjJbcs1Y",
+    };
+
+    await recommendationFactory(body.name, body.youtubeLink);
+
+    const result = await supertest(app).get(`/recommendations/random`);
+    const status = result.status;
+
+    expect(status).toEqual(200);
+  });
+
+  it("get recommendation random, without music registered", async () => {
+    const result = await supertest(app).get(`/recommendations/random`);
+    const status = result.status;
+
+    expect(status).toEqual(404);
+  });
+
+  it("get recommendation top", async () => {
+    const amount = 2;
+    const body1 = {
+      name: faker.music.songName(),
+      youtubeLink: "https://www.youtube.com/watch?v=chwyjJbcs1Y",
+    };
+
+    const body2 = {
+      name: faker.music.songName(),
+      youtubeLink: "https://www.youtube.com/watch?v=chwyjJbcs1Y",
+    };
+
+    await recommendationFactory(body1.name, body1.youtubeLink);
+    await recommendationFactory(body2.name, body2.youtubeLink);
+
+    const result = await supertest(app).get(`/recommendations/top/${amount}`);
+    const status = result.status;
+
+    expect(status).toEqual(200);
+    expect(result.body.length).toEqual(amount);
   });
 
   afterAll(async () => {
