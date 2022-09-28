@@ -1,11 +1,11 @@
 # Project21-singmeasong
 
 # Teste e2e
--front-end/cypress/e2e/createRecommendations.cy.js -> Teste a criação de uma nova recomendação de vídeo por meio do cy, e verifíca se realmente a recomendação foi criada.
--front-end/cypress/e2e/downvoteRecommendations.cy.js -> Cria um nova recomendação de vídeo acessando direto o back, e adiciona um down vote ao vídeo criado.
--front-end/cypress/e2e/upvoteRecommendations.cy.js -> Cria um nova recomendação de vídeo acessando direto o back, e adiciona um up vote ao vídeo criado.
--front-end/cypress/e2e/getRandomRecommendations.cy.js -> Cria um nova recomendação de vídeo acessando direto o back, entra na rota recommendations/random e verifica se o recomendação é recebida.
--front-end/cypress/e2e/getTopRecommendations.cy.js -> Cria um nova recomendação de vídeo acessando direto o back, entra na rota recommendations/top e verifica se o recomendação é recebida.
+-front-end/cypress/e2e/createRecommendations.cy.js -> Teste a criação de uma nova recomendação de vídeo por meio do cy, e verifíca se realmente a recomendação foi criada.<br />
+-front-end/cypress/e2e/downvoteRecommendations.cy.js -> Cria um nova recomendação de vídeo acessando direto o back, e adiciona um down vote ao vídeo criado.<br />
+-front-end/cypress/e2e/upvoteRecommendations.cy.js -> Cria um nova recomendação de vídeo acessando direto o back, e adiciona um up vote ao vídeo criado.<br />
+-front-end/cypress/e2e/getRandomRecommendations.cy.js -> Cria um nova recomendação de vídeo acessando direto o back, entra na rota recommendations/random e verifica se o recomendação é recebida.<br />
+-front-end/cypress/e2e/getTopRecommendations.cy.js -> Cria um nova recomendação de vídeo acessando direto o back, entra na rota recommendations/top e verifica se o recomendação é recebida.<br /><br />
 
 # Teste de integração
 @npm run test
@@ -20,3 +20,8 @@ Total de testes: 11
 @npm run test:unit -> Testa, na grande maioria, o sucesso das funções do service, com uma cobertura de 100%. dos 13 testes, 3 testam erro.
 
 Total de testes: 13
+
+Arquivo .env:
+PORT
+DATABASE_URL
+NODE_ENV
