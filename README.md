@@ -21,7 +21,7 @@ Total de testes: 11<br /><br /><br />
 
 Total de testes: 13<br /><br /><br />
 
-Arquivo .env:<br /><br />
+#Arquivo .env:<br /><br />
 PORT<br />
 DATABASE_URL<br />
 NODE_ENV<br />
